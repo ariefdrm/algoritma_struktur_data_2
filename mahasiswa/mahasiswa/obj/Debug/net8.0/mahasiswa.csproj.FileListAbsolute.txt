@@ -12,3 +12,4 @@ D:\ariefdarmawan8020230033\algoritma_struktur_data_2\mahasiswa\mahasiswa\obj\Deb
 D:\ariefdarmawan8020230033\algoritma_struktur_data_2\mahasiswa\mahasiswa\obj\Debug\net8.0\mahasiswa.pdb
 D:\ariefdarmawan8020230033\algoritma_struktur_data_2\mahasiswa\mahasiswa\obj\Debug\net8.0\mahasiswa.genruntimeconfig.cache
 D:\ariefdarmawan8020230033\algoritma_struktur_data_2\mahasiswa\mahasiswa\obj\Debug\net8.0\ref\mahasiswa.dll
+D:\ariefdarmawan8020230033\algoritma_struktur_data_2\mahasiswa\mahasiswa\obj\Debug\net8.0\mahasiswa.sourcelink.json
