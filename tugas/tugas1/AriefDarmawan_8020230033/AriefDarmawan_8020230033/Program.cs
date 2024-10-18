@@ -105,7 +105,7 @@ namespace AriefDarmawan_8020230033
             atas:
             Console.Clear();
             Console.Write(
-                "[1]Tambah Data\n[2]Tampilkan Data\n[3]Bersihkan layar\n[4]Exit\n[5]edit\nMasukkan Pilihan : "
+                "[1]Tambah Data\n[2]Tampilkan Data\n[3]Bersihkan layar\n[4]Exit\nMasukkan Pilihan : "
             );
             pilihan = int.Parse(Console.ReadLine());
 
