@@ -1,0 +1,7 @@
+C:\Users\arief\developer\algoritma_struktur_data_2\tugas\tugas1\AriefDarmawan_8020230033\AriefDarmawan_8020230033\bin\Debug\AriefDarmawan_8020230033.exe.config
+C:\Users\arief\developer\algoritma_struktur_data_2\tugas\tugas1\AriefDarmawan_8020230033\AriefDarmawan_8020230033\bin\Debug\AriefDarmawan_8020230033.exe
+C:\Users\arief\developer\algoritma_struktur_data_2\tugas\tugas1\AriefDarmawan_8020230033\AriefDarmawan_8020230033\bin\Debug\AriefDarmawan_8020230033.pdb
+C:\Users\arief\developer\algoritma_struktur_data_2\tugas\tugas1\AriefDarmawan_8020230033\AriefDarmawan_8020230033\obj\Debug\AriefDarmawan_8020230033.csproj.AssemblyReference.cache
+C:\Users\arief\developer\algoritma_struktur_data_2\tugas\tugas1\AriefDarmawan_8020230033\AriefDarmawan_8020230033\obj\Debug\AriefDarmawan_8020230033.csproj.CoreCompileInputs.cache
+C:\Users\arief\developer\algoritma_struktur_data_2\tugas\tugas1\AriefDarmawan_8020230033\AriefDarmawan_8020230033\obj\Debug\AriefDarmawan_8020230033.exe
+C:\Users\arief\developer\algoritma_struktur_data_2\tugas\tugas1\AriefDarmawan_8020230033\AriefDarmawan_8020230033\obj\Debug\AriefDarmawan_8020230033.pdb
