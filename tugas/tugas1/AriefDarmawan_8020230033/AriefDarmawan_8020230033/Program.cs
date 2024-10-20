@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AriefDarmawan_8020230033
@@ -60,6 +61,74 @@ namespace AriefDarmawan_8020230033
             Console.ReadKey();
         }
 
+        // Edit data
+        static void EditData(ArrayList Nama, ArrayList Nim, ArrayList Jurusan)
+        {
+            // display current data
+            TampilData(Nama, Nim, Jurusan);
+
+            // ask to user to choose which data to edit
+            Console.Write("\nMasukkan nomor data yang ingin diubah (1 - {0}): ", Nama.Count);
+            string atIndex = Console.ReadLine();
+
+            // validation if index input is empty
+            if (!string.IsNullOrWhiteSpace(atIndex))
+            {
+                int index = int.Parse(atIndex) - 1;
+
+                // check if the index is valid
+                if (index >= 0 && index < Nama.Count)
+                {
+                    // ask to user to edit
+                    Console.Clear();
+                    Console.WriteLine("\nMasukkan data yang ingin diubah : ");
+                    Console.WriteLine("Nama     : {0}", Nama[index]);
+                    Console.WriteLine("Nim      : {0}", Nim[index]);
+                    Console.WriteLine("Jurusan  : {0}", Jurusan[index]);
+
+                    // ask for the new data
+                    Console.Write("\nMasukkan nama baru (kosongkan jika tidak ingin diubah) : ");
+                    string namaBaru = Console.ReadLine();
+                    Console.Write("\nMasukkan Nim baru (kosongkan jika tidak ingin diubah) : ");
+                    string nimBaru = Console.ReadLine();
+                    Console.Write("\nMasukkan jurusan baru (kosongkan jika tidak ingin diubah) : ");
+                    string jurusanBaru = Console.ReadLine();
+
+                    if (
+                        !string.IsNullOrWhiteSpace(namaBaru)
+                        && !string.IsNullOrWhiteSpace(nimBaru)
+                        && !string.IsNullOrWhiteSpace(jurusanBaru)
+                    )
+                    {
+                        try
+                        {
+                            Nama[index] = namaBaru;
+                            Nim[index] = Int64.Parse(nimBaru);
+                            Jurusan[index] = jurusanBaru;
+
+                            Console.WriteLine("\nData berhasil diubah!!!");
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine("NIM harus berupa angka. Data gagal diubah!!!");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nData gagal diubah. Harap isi semua kolom!!!");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Nomor data tidak valid");
+                }
+
+                Console.Write("Press the Enter key to continue...");
+
+                Console.ReadLine();
+            }
+        }
+
         // display data
         static void TampilData(ArrayList Nama, ArrayList Nim, ArrayList Jurusan)
         {
@@ -94,36 +163,83 @@ namespace AriefDarmawan_8020230033
 
             // End message
             Console.WriteLine("[END]");
-            Console.Write("Press the Enter key to continue...");
         }
 
-        static void Main(string[] args)
+        // Remove data
+        static void RemoveData(ArrayList Nama, ArrayList Nim, ArrayList Jurusan)
+        {
+            // display current data
+            TampilData(Nama, Nim, Jurusan);
+
+            // ask to user to choose which data to edit
+            Console.Write("\nMasukkan nomor data yang ingin dihapus (1 - {0}): ", Nama.Count);
+            string atIndex = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(atIndex))
+            {
+                int index = int.Parse(atIndex) - 1;
+
+                if (index >= 0 && index < Nama.Count)
+                {
+                    Nama.RemoveAt(index);
+                    Nim.RemoveAt(index);
+                    Jurusan.RemoveAt(index);
+                    Console.WriteLine("\nData berhasil dihapus!!!");
+                }
+                else
+                {
+                    Console.WriteLine("Data gagal dihapus. Nomor data tidak valid!!!");
+                }
+                Console.WriteLine("press the Enter key to continue...");
+                Console.ReadKey();
+            }
+        }
+
+        static void Main()
         {
             Mahasiswa mhs = new Mahasiswa();
             int pilihan;
+            int delayMilisecond = 2000;
 
             atas:
             Console.Clear();
             Console.Write(
-                "[1]Tambah Data\n[2]Tampilkan Data\n[3]Bersihkan layar\n[4]Exit\nMasukkan Pilihan : "
+                "[1]Tambah Data\n[2]Tampilkan Data\n[3]Edit data\n[4]Hapus data\n[5]Bersihkan layar\n[6]Exit\nMasukkan Pilihan : "
             );
-            pilihan = int.Parse(Console.ReadLine());
+            string choice = Console.ReadLine();
 
-            switch (pilihan)
+            if (!string.IsNullOrWhiteSpace(choice))
             {
-                case 1:
-                    TambahData(mhs.nama, mhs.nim, mhs.jurusan);
-                    break;
-                case 2:
-                    TampilData(mhs.nama, mhs.nim, mhs.jurusan);
-                    Console.ReadKey();
-                    break;
-                case 3:
-                    Console.Clear();
-                    break;
-                case 4:
-                    Environment.Exit(0);
-                    break;
+                pilihan = int.Parse(choice);
+                switch (pilihan)
+                {
+                    case 1:
+                        TambahData(mhs.nama, mhs.nim, mhs.jurusan);
+                        break;
+                    case 2:
+                        TampilData(mhs.nama, mhs.nim, mhs.jurusan);
+                        Console.Write("Press the Enter key to continue...");
+                        Console.ReadKey();
+                        break;
+                    case 3:
+                        EditData(mhs.nama, mhs.nim, mhs.jurusan);
+                        break;
+                    case 4:
+                        RemoveData(mhs.nama, mhs.nim, mhs.jurusan);
+                        break;
+                    case 5:
+                        Console.Clear();
+                        break;
+                    case 6:
+                        Console.WriteLine("BYE BYE :D");
+                        Thread.Sleep(delayMilisecond);
+                        Environment.Exit(0);
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Inputan harus berupa angka");
             }
 
             goto atas;
