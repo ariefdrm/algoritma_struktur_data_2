@@ -61,6 +61,7 @@ namespace AriefDarmawan_8020230033
             Console.ReadKey();
         }
 
+        // Edit data
         static void EditData(ArrayList Nama, ArrayList Nim, ArrayList Jurusan)
         {
             // display current data
@@ -164,6 +165,36 @@ namespace AriefDarmawan_8020230033
             Console.WriteLine("[END]");
         }
 
+        // Remove data
+        static void RemoveData(ArrayList Nama, ArrayList Nim, ArrayList Jurusan)
+        {
+            // display current data
+            TampilData(Nama, Nim, Jurusan);
+
+            // ask to user to choose which data to edit
+            Console.Write("\nMasukkan nomor data yang ingin dihapus (1 - {0}): ", Nama.Count);
+            string atIndex = Console.ReadLine();
+
+            if (!string.IsNullOrWhiteSpace(atIndex))
+            {
+                int index = int.Parse(atIndex) - 1;
+
+                if (index >= 0 && index < Nama.Count)
+                {
+                    Nama.RemoveAt(index);
+                    Nim.RemoveAt(index);
+                    Jurusan.RemoveAt(index);
+                    Console.WriteLine("\nData berhasil dihapus!!!");
+                }
+                else
+                {
+                    Console.WriteLine("Data gagal dihapus. Nomor data tidak valid!!!");
+                }
+                Console.WriteLine("press the Enter key to continue...");
+                Console.ReadKey();
+            }
+        }
+
         static void Main()
         {
             Mahasiswa mhs = new Mahasiswa();
@@ -173,7 +204,7 @@ namespace AriefDarmawan_8020230033
             atas:
             Console.Clear();
             Console.Write(
-                "[1]Tambah Data\n[2]Tampilkan Data\n[3]Edit data\n[4]Bersihkan layar\n[5]Exit\nMasukkan Pilihan : "
+                "[1]Tambah Data\n[2]Tampilkan Data\n[3]Edit data\n[4]Hapus data\n[5]Bersihkan layar\n[6]Exit\nMasukkan Pilihan : "
             );
             string choice = Console.ReadLine();
 
@@ -194,9 +225,12 @@ namespace AriefDarmawan_8020230033
                         EditData(mhs.nama, mhs.nim, mhs.jurusan);
                         break;
                     case 4:
-                        Console.Clear();
+                        RemoveData(mhs.nama, mhs.nim, mhs.jurusan);
                         break;
                     case 5:
+                        Console.Clear();
+                        break;
+                    case 6:
                         Console.WriteLine("BYE BYE :D");
                         Thread.Sleep(delayMilisecond);
                         Environment.Exit(0);
