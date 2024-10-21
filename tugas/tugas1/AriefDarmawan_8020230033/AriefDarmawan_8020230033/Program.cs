@@ -46,8 +46,10 @@ namespace AriefDarmawan_8020230033
                     // Success message
                     Console.WriteLine("Data berhasil ditambahkan!!!");
                 }
-                catch (FormatException)
+                catch (Exception e)
                 {
+                    Console.WriteLine("Error message : {0}", e.Message);
+                    Thread.Sleep(1000);
                     Console.WriteLine("NIM harus berupa angka. Data gagal ditambahkan!!!");
                 }
             }
@@ -56,6 +58,7 @@ namespace AriefDarmawan_8020230033
                 // Failure message
                 Console.WriteLine("Data gagal ditambahkan. Harap isi semua kolom!!!");
             }
+            Console.WriteLine();
             Console.Write("Press the Enter key to continue...");
 
             Console.ReadKey();
@@ -87,36 +90,36 @@ namespace AriefDarmawan_8020230033
                     Console.WriteLine("Jurusan  : {0}", Jurusan[index]);
 
                     // ask for the new data
-                    Console.Write("\nMasukkan nama baru (kosongkan jika tidak ingin diubah) : ");
+                    Console.Write("\nMasukkan nama baru (kosongkan jika tidak ingin mengubah): ");
                     string namaBaru = Console.ReadLine();
-                    Console.Write("\nMasukkan Nim baru (kosongkan jika tidak ingin diubah) : ");
-                    string nimBaru = Console.ReadLine();
-                    Console.Write("\nMasukkan jurusan baru (kosongkan jika tidak ingin diubah) : ");
-                    string jurusanBaru = Console.ReadLine();
+                    if (!string.IsNullOrWhiteSpace(namaBaru))
+                    {
+                        Nama[index] = namaBaru;
+                    }
 
-                    if (
-                        !string.IsNullOrWhiteSpace(namaBaru)
-                        && !string.IsNullOrWhiteSpace(nimBaru)
-                        && !string.IsNullOrWhiteSpace(jurusanBaru)
-                    )
+                    Console.Write("Masukkan nim baru (kosongkan jika tidak ingin mengubah): ");
+                    string nimBaru = Console.ReadLine();
+                    if (!string.IsNullOrWhiteSpace(nimBaru))
                     {
                         try
                         {
-                            Nama[index] = namaBaru;
                             Nim[index] = Int64.Parse(nimBaru);
-                            Jurusan[index] = jurusanBaru;
-
-                            Console.WriteLine("\nData berhasil diubah!!!");
                         }
                         catch (FormatException)
                         {
-                            Console.WriteLine("NIM harus berupa angka. Data gagal diubah!!!");
+                            Console.WriteLine("NIM tidak valid. NIM tidak diubah.");
                         }
                     }
-                    else
+
+                    Console.Write("Masukkan jurusan baru (kosongkan jika tidak ingin mengubah): ");
+                    string jurusanBaru = Console.ReadLine();
+                    if (!string.IsNullOrWhiteSpace(jurusanBaru))
                     {
-                        Console.WriteLine("\nData gagal diubah. Harap isi semua kolom!!!");
+                        Jurusan[index] = jurusanBaru;
                     }
+
+                    // Confirm the update
+                    Console.WriteLine("\nData berhasil diperbarui.");
                 }
                 else
                 {
