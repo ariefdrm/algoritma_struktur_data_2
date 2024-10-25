@@ -123,40 +123,74 @@ namespace AriefDarmawan_8020230033
                     // ask for the new data
                     Console.Write("\nMasukkan nama baru (kosongkan jika tidak ingin mengubah): ");
                     string namaBaru = Console.ReadLine();
-                    if (!string.IsNullOrWhiteSpace(namaBaru))
-                    {
-                        Nama[index] = namaBaru;
-                    }
 
                     Console.Write("Masukkan nim baru (kosongkan jika tidak ingin mengubah): ");
                     string nimBaru = Console.ReadLine();
-                    if (!string.IsNullOrWhiteSpace(nimBaru))
-                    {
-                        try
-                        {
-                            Nim[index] = Int64.Parse(nimBaru);
-                        }
-                        catch (FormatException)
-                        {
-                            Console.WriteLine("NIM harus berupa angka. NIM tidak diubah!!!");
-                        }
-                    }
 
                     Console.Write("Masukkan jurusan baru (kosongkan jika tidak ingin mengubah): ");
                     string jurusanBaru = Console.ReadLine();
-                    if (!string.IsNullOrWhiteSpace(jurusanBaru))
-                    {
-                        Jurusan[index] = jurusanBaru;
-                    }
 
-                    // Confirm the update
-                    Console.WriteLine("\nData berhasil diperbarui.");
+                    Console.WriteLine();
+                    Console.Write("Apakah anda yakin ingin menyimpan perubahan (y/n)? ");
+                    string answer = Console.ReadLine();
+
+                    if (answer == "y" || answer == "Y")
+                    {
+                        Console.Clear();
+                        string resultName = (
+                            string.IsNullOrWhiteSpace(namaBaru) ? Nama[index].ToString() : namaBaru
+                        );
+                        Console.WriteLine("Nama     : {0} --> {1}", Nama[index], resultName);
+
+                        string resultNim = (
+                            string.IsNullOrWhiteSpace(nimBaru) ? Nim[index].ToString() : nimBaru
+                        );
+                        Console.WriteLine("Nim      : {0} --> {1}", Nim[index], resultNim);
+
+                        string resultJurusan = (
+                            string.IsNullOrWhiteSpace(jurusanBaru)
+                                ? Jurusan[index].ToString()
+                                : jurusanBaru
+                        );
+                        Console.WriteLine("Jurusan  : {0} --> {1}", Jurusan[index], resultJurusan);
+
+                        if (!string.IsNullOrWhiteSpace(namaBaru))
+                        {
+                            Nama[index] = namaBaru;
+                        }
+
+                        // change nim to new value
+                        if (!string.IsNullOrWhiteSpace(nimBaru))
+                        {
+                            try
+                            {
+                                Nim[index] = Int64.Parse(nimBaru);
+                            }
+                            catch (FormatException)
+                            {
+                                Console.WriteLine("NIM harus berupa angka. NIM tidak diubah!!!");
+                            }
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(jurusanBaru))
+                        {
+                            Jurusan[index] = jurusanBaru;
+                        }
+
+                        // Confirm the update
+                        Console.WriteLine("\nData berhasil diperbarui.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Perubahan data dibatalkan.");
+                    }
                 }
                 else
                 {
                     Console.WriteLine("Nomor data tidak valid");
                 }
 
+                Console.WriteLine();
                 Console.Write("Press the Enter key to continue...");
 
                 Console.ReadLine();
@@ -179,23 +213,34 @@ namespace AriefDarmawan_8020230033
                 {
                     int index = int.Parse(atIndex) - 1;
 
-                    // Check if the index is valid
-                    if (index >= 0 && index < Nama.Count)
+                    Console.Write("Apakah anda yakin ingin menghapus data ini (y/n)? ");
+                    String answer = Console.ReadLine();
+
+                    if (answer == "y" || answer == "Y")
                     {
-                        Nama.RemoveAt(index);
-                        Nim.RemoveAt(index);
-                        Jurusan.RemoveAt(index);
-                        Console.WriteLine("\nData berhasil dihapus!!!");
+                        // Check if the index is valid
+                        if (index >= 0 && index < Nama.Count)
+                        {
+                            Nama.RemoveAt(index);
+                            Nim.RemoveAt(index);
+                            Jurusan.RemoveAt(index);
+                            Console.WriteLine("\nData berhasil dihapus!!!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Data gagal dihapus. Nomor data tidak valid!!!");
+                        }
                     }
                     else
                     {
-                        Console.WriteLine("Data gagal dihapus. Nomor data tidak valid!!!");
+                        Console.WriteLine("Data gagal dihapus. Silahkan coba lagi!!!");
                     }
                 }
                 catch (FormatException)
                 {
                     Console.WriteLine("Input harus berupa angka. Data gagal dihapus!!");
                 }
+                Console.WriteLine();
                 Console.WriteLine("press the Enter key to continue...");
                 Console.ReadKey();
             }
