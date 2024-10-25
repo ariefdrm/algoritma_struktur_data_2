@@ -95,6 +95,13 @@ namespace AriefDarmawan_8020230033
             Console.WriteLine("[END]");
         }
 
+        static void tampilDataPerIndex(ArrayList Nama, ArrayList Nim, ArrayList Jurusan, int index)
+        {
+            Console.WriteLine("Nama     : {0}", Nama[index]);
+            Console.WriteLine("Nim      : {0}", Nim[index]);
+            Console.WriteLine("Jurusan  : {0}", Jurusan[index]);
+        }
+
         // Edit data
         static void EditData(ArrayList Nama, ArrayList Nim, ArrayList Jurusan)
         {
@@ -109,6 +116,7 @@ namespace AriefDarmawan_8020230033
             if (!string.IsNullOrWhiteSpace(atIndex))
             {
                 int index = int.Parse(atIndex) - 1;
+                string answer = string.Empty;
 
                 // check if the index is valid
                 if (index >= 0 && index < Nama.Count)
@@ -116,9 +124,7 @@ namespace AriefDarmawan_8020230033
                     // ask to user to edit
                     Console.Clear();
                     Console.WriteLine("\nMasukkan data yang ingin diubah : ");
-                    Console.WriteLine("Nama     : {0}", Nama[index]);
-                    Console.WriteLine("Nim      : {0}", Nim[index]);
-                    Console.WriteLine("Jurusan  : {0}", Jurusan[index]);
+                    tampilDataPerIndex(Nama, Nim, Jurusan, index);
 
                     // ask for the new data
                     Console.Write("\nMasukkan nama baru (kosongkan jika tidak ingin mengubah): ");
@@ -131,8 +137,15 @@ namespace AriefDarmawan_8020230033
                     string jurusanBaru = Console.ReadLine();
 
                     Console.WriteLine();
-                    Console.Write("Apakah anda yakin ingin menyimpan perubahan (y/n)? ");
-                    string answer = Console.ReadLine();
+                    if (
+                        !string.IsNullOrWhiteSpace(namaBaru)
+                        && !string.IsNullOrWhiteSpace(nimBaru)
+                        && !string.IsNullOrWhiteSpace(jurusanBaru)
+                    )
+                    {
+                        Console.Write("Apakah anda yakin ingin menyimpan perubahan (y/n)? ");
+                        answer = Console.ReadLine();
+                    }
 
                     if (answer == "y" || answer == "Y")
                     {
