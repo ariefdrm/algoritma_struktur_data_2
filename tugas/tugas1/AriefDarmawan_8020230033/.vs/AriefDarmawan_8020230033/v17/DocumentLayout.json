@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\arief\\developer\\algoritma_struktur_data_2\\tugas\\tugas1\\AriefDarmawan_8020230033\\",
+  "WorkspaceRootPath": "D:\\ariefdarmawan8020230033\\algoritma_struktur_data_2\\tugas\\tugas1\\AriefDarmawan_8020230033\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{18B9AA28-1D82-4498-8076-EF753B665D8F}|AriefDarmawan_8020230033\\AriefDarmawan_8020230033.csproj|c:\\users\\arief\\developer\\algoritma_struktur_data_2\\tugas\\tugas1\\ariefdarmawan_8020230033\\ariefdarmawan_8020230033\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{18B9AA28-1D82-4498-8076-EF753B665D8F}|AriefDarmawan_8020230033\\AriefDarmawan_8020230033.csproj|d:\\ariefdarmawan8020230033\\algoritma_struktur_data_2\\tugas\\tugas1\\ariefdarmawan_8020230033\\ariefdarmawan_8020230033\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{18B9AA28-1D82-4498-8076-EF753B665D8F}|AriefDarmawan_8020230033\\AriefDarmawan_8020230033.csproj|solutionrelative:ariefdarmawan_8020230033\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -20,11 +20,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\arief\\developer\\algoritma_struktur_data_2\\tugas\\tugas1\\AriefDarmawan_8020230033\\AriefDarmawan_8020230033\\Program.cs",
+              "DocumentMoniker": "D:\\ariefdarmawan8020230033\\algoritma_struktur_data_2\\tugas\\tugas1\\AriefDarmawan_8020230033\\AriefDarmawan_8020230033\\Program.cs",
               "RelativeDocumentMoniker": "AriefDarmawan_8020230033\\Program.cs",
-              "ToolTip": "C:\\Users\\arief\\developer\\algoritma_struktur_data_2\\tugas\\tugas1\\AriefDarmawan_8020230033\\AriefDarmawan_8020230033\\Program.cs",
+              "ToolTip": "D:\\ariefdarmawan8020230033\\algoritma_struktur_data_2\\tugas\\tugas1\\AriefDarmawan_8020230033\\AriefDarmawan_8020230033\\Program.cs",
               "RelativeToolTip": "AriefDarmawan_8020230033\\Program.cs",
-              "ViewState": "AQIAAMMAAAAAAAAAAADwv98AAAANAAAA",
+              "ViewState": "AgIAACUAAAAAAAAAAAAgwHwAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-18T09:14:34.391Z",
               "EditorCaption": ""

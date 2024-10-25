@@ -139,8 +139,8 @@ namespace AriefDarmawan_8020230033
                     Console.WriteLine();
                     if (
                         !string.IsNullOrWhiteSpace(namaBaru)
-                        && !string.IsNullOrWhiteSpace(nimBaru)
-                        && !string.IsNullOrWhiteSpace(jurusanBaru)
+                        || !string.IsNullOrWhiteSpace(nimBaru)
+                        || !string.IsNullOrWhiteSpace(jurusanBaru)
                     )
                     {
                         Console.Write("Apakah anda yakin ingin menyimpan perubahan (y/n)? ");

@@ -6,7 +6,7 @@ internal class Program
   
     static void TambahData(ArrayList a)
     {
-        Console.Write("masukkan nilai data : ");
+        Console.Write("Masukkan nama : ");
         a.Add(int.Parse(Console.ReadLine()));
     }
 
@@ -44,4 +44,15 @@ internal class Program
     }
     
   
+}
+
+class Mahasiswa
+{
+    private string Nama;
+    private int Nim;
+    private string Jurusan;
+
+    public string nama { set { Nama = value;} get {  return Nama; } } 
+    public int nim { set { Nim = value;} get { return Nim; } }
+    public string jurusan { set { Jurusan = value;} get { return Jurusan; } }
 }
