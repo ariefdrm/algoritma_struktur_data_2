@@ -13,44 +13,54 @@ namespace AriefDarmawan_8020230033
         // Add data
         static void TambahData(ArrayList Nama, ArrayList Nim, ArrayList Jurusan)
         {
+            // atas:
             Console.Clear();
+            string namaInput = string.Empty;
+            string nimInput = string.Empty;
+            string jurusanInput = string.Empty;
 
             // Input for Nama
             Console.Write("Masukkan nama : ");
-            string namaInput = Console.ReadLine();
+            namaInput = Console.ReadLine();
 
             // Input for Nim
             Console.Write("Masukkan nim : ");
-            string nimInput = Console.ReadLine();
-
-            // Input for Jurusan
-            Console.Write("Masukkan jurusan : ");
-            string jurusanInput = Console.ReadLine();
-
-            if (
-                !string.IsNullOrWhiteSpace(namaInput)
-                && !string.IsNullOrWhiteSpace(nimInput)
-                && !string.IsNullOrWhiteSpace(jurusanInput)
-            )
+            nimInput = Console.ReadLine();
+            if (long.TryParse(nimInput, out long nimValue))
             {
                 try
                 {
-                    long nim = long.Parse(nimInput);
+                    // Input for Jurusan
+                    Console.Write("Masukkan jurusan : ");
+                    jurusanInput = Console.ReadLine();
 
-                    Nama.Add(namaInput);
-                    Nim.Add(nim);
-                    Jurusan.Add(jurusanInput);
+                    if (
+                        !string.IsNullOrWhiteSpace(namaInput)
+                        && !string.IsNullOrWhiteSpace(nimInput)
+                        && !string.IsNullOrWhiteSpace(jurusanInput)
+                    )
+                    {
+                        Nama.Add(namaInput);
+                        Nim.Add(nimValue);
+                        Jurusan.Add(jurusanInput);
 
-                    Console.WriteLine("Data telah berhasil ditambahkan!!!");
+                        Console.WriteLine("Data telah berhasil ditambahkan!!!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Data gagal ditambahkan. Silahkan ulangi kembali!!");
+                    }
                 }
-                catch (FormatException)
+                catch (FormatException e)
                 {
-                    Console.WriteLine("NIM harus berupa angka. NIM tidak ditambahkan!!!");
+                    throw e;
                 }
             }
             else
             {
-                Console.WriteLine("Data gagal ditambahkan. Silahkan ulangi kembali!!");
+                Console.WriteLine(
+                    "Nim harus berupa angka. Data gagal ditambahkan. Silahkan ulangi kembali!!"
+                );
             }
 
             Console.WriteLine();
