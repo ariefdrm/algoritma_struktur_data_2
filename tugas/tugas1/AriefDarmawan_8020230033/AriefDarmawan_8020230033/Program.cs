@@ -10,63 +10,81 @@ namespace AriefDarmawan_8020230033
 {
     internal class Program
     {
-        // Add data
-        static void TambahData(ArrayList Nama, ArrayList Nim, ArrayList Jurusan)
+        // get input from user
+        static string GetInput(string prompt)
         {
-            // atas:
-            Console.Clear();
-            string namaInput = string.Empty;
-            string nimInput = string.Empty;
-            string jurusanInput = string.Empty;
+            Console.Write(prompt);
+            return Console.ReadLine();
+        }
 
-            // Input for Nama
-            Console.Write("Masukkan nama : ");
-            namaInput = Console.ReadLine();
+        // continue program
+        static void ContinueProgram()
+        {
+            Console.Write("Press the Enter key to continue...");
+            Console.ReadKey();
+        }
 
-            // Input for Nim
-            Console.Write("Masukkan nim : ");
-            nimInput = Console.ReadLine();
-            if (long.TryParse(nimInput, out long nimValue))
+        // Confirm program
+        static string ConfirmProgram()
+        {
+            string answer = GetInput("Apakah anda ingin melanjutkan (y/n)? :  ");
+            return answer;
+        }
+
+        static bool GetNimInput(out long nimInput)
+        {
+            string nimInputStr = GetInput("Masukkan Nim : ");
+
+            if (long.TryParse(nimInputStr, out nimInput))
             {
-                try
-                {
-                    // Input for Jurusan
-                    Console.Write("Masukkan jurusan : ");
-                    jurusanInput = Console.ReadLine();
-
-                    if (
-                        !string.IsNullOrWhiteSpace(namaInput)
-                        && !string.IsNullOrWhiteSpace(nimInput)
-                        && !string.IsNullOrWhiteSpace(jurusanInput)
-                    )
-                    {
-                        Nama.Add(namaInput);
-                        Nim.Add(nimValue);
-                        Jurusan.Add(jurusanInput);
-
-                        Console.WriteLine("Data telah berhasil ditambahkan!!!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Data gagal ditambahkan. Silahkan ulangi kembali!!");
-                    }
-                }
-                catch (FormatException e)
-                {
-                    throw e;
-                }
+                return true;
             }
             else
             {
                 Console.WriteLine(
-                    "Nim harus berupa angka. Data gagal ditambahkan. Silahkan ulangi kembali!!"
+                    "\nNim harus berupa angka. Data gagal ditambahkan. Silahkan ulangi kembali.!!!"
                 );
+                ContinueProgram();
+
+                return false;
+            }
+        }
+
+        // Add data
+        static void TambahData(ArrayList Nama, ArrayList Nim, ArrayList Jurusan)
+        {
+            // Clear console
+            Console.Clear();
+
+            // Get input for input
+            string nameInput = GetInput("Masukkan Nama : ");
+
+            // Get input for Nim
+            long nimInput;
+            if (!GetNimInput(out nimInput))
+            {
+                return; // Exit the method if Nim input is invalid
             }
 
-            Console.WriteLine();
-            Console.Write("Press the Enter key to continue...");
+            // Get input for jurusan
+            string jurusanInput = GetInput("Masukkan Jurusan : ");
 
-            Console.ReadKey();
+            // Check if all inputs are valid
+            if (!string.IsNullOrWhiteSpace(nameInput) && !string.IsNullOrWhiteSpace(jurusanInput))
+            {
+                // Add data to ArrayList
+                Nama.Add(nameInput);
+                Nim.Add(nimInput);
+                Jurusan.Add(jurusanInput);
+
+                Console.WriteLine("Data berhasil ditambahkan!!!");
+            }
+            else
+            {
+                Console.WriteLine("Data gagal ditambahkan. Silahkan ulangi kembali!!!");
+            }
+
+            ContinueProgram();
         }
 
         // display data
@@ -119,8 +137,9 @@ namespace AriefDarmawan_8020230033
             TampilData(Nama, Nim, Jurusan);
 
             // ask to user to choose which data to edit
-            Console.Write("\nMasukkan nomor data yang ingin diubah (1 - {0}): ", Nama.Count);
-            string atIndex = Console.ReadLine();
+            string atIndex = GetInput(
+                $"\nMasukkan nomor data yang ingin diubah (1 - {Nama.Count}): "
+            );
 
             // validation if index input is empty
             if (!string.IsNullOrWhiteSpace(atIndex))
@@ -137,15 +156,17 @@ namespace AriefDarmawan_8020230033
                     tampilDataPerIndex(Nama, Nim, Jurusan, index);
 
                     // ask for the new data
-                    Console.Write("\nMasukkan nama baru (kosongkan jika tidak ingin mengubah): ");
-                    string namaBaru = Console.ReadLine();
+                    string namaBaru = GetInput(
+                        "\nMasukkan nama baru (kosongkan jika tidak ingin mengubah): "
+                    );
+                    string nimBaru = GetInput(
+                        "Masukkan nim baru (kosongkan jika tidak ingin mengubah): "
+                    );
+                    string jurusanBaru = GetInput(
+                        "Masukkan jurusan baru (kosongkan jika tidak ingin mengubah : "
+                    );
 
-                    Console.Write("Masukkan nim baru (kosongkan jika tidak ingin mengubah): ");
-                    string nimBaru = Console.ReadLine();
-
-                    Console.Write("Masukkan jurusan baru (kosongkan jika tidak ingin mengubah): ");
-                    string jurusanBaru = Console.ReadLine();
-
+                    // Check if there are non-empty inputs and confirm the value change
                     Console.WriteLine();
                     if (
                         !string.IsNullOrWhiteSpace(namaBaru)
@@ -153,13 +174,13 @@ namespace AriefDarmawan_8020230033
                         || !string.IsNullOrWhiteSpace(jurusanBaru)
                     )
                     {
-                        Console.Write("Apakah anda yakin ingin menyimpan perubahan (y/n)? ");
-                        answer = Console.ReadLine();
+                        answer = ConfirmProgram();
                     }
 
                     if (answer == "y" || answer == "Y")
                     {
                         Console.Clear();
+                        // Display old and new data
                         string resultName = (
                             string.IsNullOrWhiteSpace(namaBaru) ? Nama[index].ToString() : namaBaru
                         );
@@ -177,6 +198,7 @@ namespace AriefDarmawan_8020230033
                         );
                         Console.WriteLine("Jurusan  : {0} --> {1}", Jurusan[index], resultJurusan);
 
+                        // Change name to new value
                         if (!string.IsNullOrWhiteSpace(namaBaru))
                         {
                             Nama[index] = namaBaru;
@@ -195,28 +217,26 @@ namespace AriefDarmawan_8020230033
                             }
                         }
 
+                        // change jurusan to new value
                         if (!string.IsNullOrWhiteSpace(jurusanBaru))
                         {
                             Jurusan[index] = jurusanBaru;
                         }
 
                         // Confirm the update
-                        Console.WriteLine("\nData berhasil diperbarui.");
+                        Console.WriteLine("\nData berhasil diperbarui.!!!");
                     }
                     else
                     {
-                        Console.WriteLine("Perubahan data dibatalkan.");
+                        Console.WriteLine("Perubahan data dibatalkan.!!!");
                     }
                 }
                 else
                 {
                     Console.WriteLine("Nomor data tidak valid");
                 }
-
                 Console.WriteLine();
-                Console.Write("Press the Enter key to continue...");
-
-                Console.ReadLine();
+                ContinueProgram();
             }
         }
 
@@ -227,8 +247,9 @@ namespace AriefDarmawan_8020230033
             TampilData(Nama, Nim, Jurusan);
 
             // ask to user to choose which data to edit
-            Console.Write("\nMasukkan nomor data yang ingin dihapus (1 - {0}): ", Nama.Count);
-            string atIndex = Console.ReadLine();
+            string atIndex = GetInput(
+                $"\nMasukkan nomor data yang ingin dihapus (1 - {Nama.Count}): "
+            );
 
             if (!string.IsNullOrWhiteSpace(atIndex))
             {
@@ -236,8 +257,7 @@ namespace AriefDarmawan_8020230033
                 {
                     int index = int.Parse(atIndex) - 1;
 
-                    Console.Write("Apakah anda yakin ingin menghapus data ini (y/n)? ");
-                    String answer = Console.ReadLine();
+                    String answer = GetInput("Apakah anda yakin ingin menghapus data ini (y/n)? ");
 
                     if (answer == "y" || answer == "Y")
                     {
@@ -264,8 +284,7 @@ namespace AriefDarmawan_8020230033
                     Console.WriteLine("Input harus berupa angka. Data gagal dihapus!!");
                 }
                 Console.WriteLine();
-                Console.WriteLine("press the Enter key to continue...");
-                Console.ReadKey();
+                ContinueProgram();
             }
         }
 
@@ -294,8 +313,7 @@ namespace AriefDarmawan_8020230033
                             break;
                         case 2:
                             TampilData(mhs.nama, mhs.nim, mhs.jurusan);
-                            Console.Write("Press the Enter key to continue...");
-                            Console.ReadKey();
+                            ContinueProgram();
                             break;
                         case 3:
                             EditData(mhs.nama, mhs.nim, mhs.jurusan);
