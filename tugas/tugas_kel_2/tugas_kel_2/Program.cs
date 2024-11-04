@@ -37,7 +37,7 @@ namespace tugas_kel_2
         {
             if (a.Count > 0)
             {
-                Console.Write("Last Element: " + a[a.Count - 1].ToString());
+                Console.Write("Last Element: {0}\n", a[a.Count - 1].ToString());
             }
             else
             {
@@ -109,18 +109,67 @@ namespace tugas_kel_2
         // Display output text
         public void DisplayCurrentText(string a)
         {
-            Console.WriteLine("{0}", a, CurrentText); // Display the current text
+            Console.WriteLine("{0} {1}", a, CurrentText); // Display the current text
         }
 
         // Display the content of the stack (for debugging purpose)
-        public void DisplayStack(ArrayList a)
+        public void DisplayStack(ArrayList a, ArrayList b)
         {
-            Console.WriteLine("+-------------------------+");
-            for (int i = a.Count; i > 0; i--) // To print the elements in the stack
+            int index = (a.Count == 0) ? b.Count : a.Count; // find the length of the ArrayList
+            string isEmpty = " ";
+            int NoA = index;
+            int NoB = index;
+
+            Console.WriteLine("+----+-------------------------+----+-------------------------+");
+            Console.WriteLine("| No | Undo Text               | No | Redo Text               |");
+            Console.WriteLine("+----+-------------------------+----+-------------------------+");
+            for (int i = index; i > 0; i--) // To print the elements in the stack
             {
-                Console.WriteLine("| {0,-23} |", a[i - 1]);
+                if (a.Count == 0) // check if the first ArrayList is empty
+                {
+                    // printing the elements
+                    Console.WriteLine(
+                        "| {0,-2} | {1, -23} | {2,-2} | {3, -23} |",
+                        isEmpty,
+                        isEmpty,
+                        NoB--,
+                        b[i - 1]
+                    );
+                }
+                else if (b.Count == 0) // check if the second ArrayList is empty
+                {
+                    // printing the elements
+                    Console.WriteLine(
+                        "| {0,-2} | {1, -23} | {2,-2} | {3, -23} |",
+                        NoA--,
+                        a[i - 1],
+                        isEmpty,
+                        isEmpty
+                    );
+                }
+                else // if both ArrayList are not empty
+                {
+                    // printing the elements
+                    Console.WriteLine(
+                        "| {0,-2} | {1, -23} | {2,-2} | {3, -23} |",
+                        NoA--,
+                        a[i - 1],
+                        NoB--,
+                        b[i - 1]
+                    );
+                }
             }
-            Console.WriteLine("+-------------------------+");
+            Console.WriteLine("+----+-------------------------+----+-------------------------+");
+        }
+
+        public void DisplayLastElement(ArrayList a, ArrayList b)
+        {
+            System.Console.WriteLine();
+            Console.Write("Undo text: ");
+            peek(a);
+            Console.Write("Redo text: ");
+            peek(b);
+            Footer();
         }
 
         // Function to get input
@@ -151,16 +200,8 @@ namespace tugas_kel_2
             Console.Clear();
             Console.Write("Current Text: {0}\n", CurrentText);
             Console.WriteLine();
-            if (UndoTextInput.Count > 0)
-            {
-                Console.Write("Text yang diundo : \n");
-                DisplayStack(UndoTextInput);
-            }
-            if (RedoTextInput.Count > 0)
-            {
-                Console.Write("Text yang diredo :  \n");
-                DisplayStack(RedoTextInput);
-            }
+
+            DisplayStack(UndoTextInput, RedoTextInput);
 
             Console.ReadKey();
         }
@@ -187,6 +228,13 @@ namespace tugas_kel_2
             Console.Clear();
             Headers("Undo/Redo Text Editor"); // Display the header
             DisplayCurrentText("The current text is: "); // Display the current text
+
+            if (UndoTextInput.Count > 0 || RedoTextInput.Count > 0) // Check if the stack is empty
+            {
+                Console.WriteLine();
+                DisplayStack(UndoTextInput, RedoTextInput); // Display the content of the stack
+            }
+
             Console.WriteLine();
             Console.WriteLine("[1] Edit\n[2] Undo\n[3] Redo\n[4] Exit"); // Print the menu
         }
@@ -208,8 +256,9 @@ namespace tugas_kel_2
                 case 4:
                     Environment.Exit(0); // Exit the program
                     break;
-                case 5: // for debugging purpose
-                    Debugging();
+                case 5:
+                    // Debugging();
+                    DisplayLastElement(UndoTextInput, RedoTextInput);
                     break;
             }
         }
@@ -221,8 +270,8 @@ namespace tugas_kel_2
             CurrentText = GetInput("Masukkan teks: "); // User input
             if (string.IsNullOrWhiteSpace(CurrentText)) // Check if the text is empty or just whitespace
             {
-                Console.WriteLine("Teks tidak boleh kosong. Silahkan ulangi kembali.!!!");
-                Console.ReadKey();
+                Console.WriteLine("Teks tidak boleh kosong. Silahkan ulangi kembali.!!!"); // error message
+                Footer();
                 Console.Clear();
                 Run(); // Recall "Run" program if the input is empty of just whitespace
             }
