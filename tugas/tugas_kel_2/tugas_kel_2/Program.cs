@@ -11,13 +11,13 @@ namespace tugas_kel_2
 {
     class Stacks
     {
-        // Function to add element
+        // Fungsi untuk menambahkan element
         public static void push(ArrayList a, string input)
         {
             a.Add(input);
         }
 
-        // Function to remove last element
+        // Fungsi untuk menghapus element terakhir
         public static void pop(ArrayList a)
         {
             if (a.Count > 0)
@@ -26,13 +26,13 @@ namespace tugas_kel_2
             }
         }
 
-        // function to clear all elements
+        // Fungsi untuk menghapus semua element
         public static void clear(ArrayList a)
         {
             a.Clear();
         }
 
-        // Function to print last element
+        // Fungsin untuk print element terakhir
         public static void peek(ArrayList a)
         {
             if (a.Count > 0)
@@ -48,7 +48,7 @@ namespace tugas_kel_2
 
     class TextEditor : Stacks
     {
-        // Initializing variables
+        // Menginisialisasi variabel
         private string text = "";
         private ArrayList undoText = new ArrayList();
         private ArrayList redoText = new ArrayList();
@@ -56,32 +56,32 @@ namespace tugas_kel_2
         // Encapsulation for "TextInput"
         public string CurrentText
         {
-            get { return text; } // return the value of "text"
-            set { text = value; } // set the value of "text"
+            get { return text; } // mengembalikan nilai dari "text"
+            set { text = value; } // atur nilai dari "text"
         }
 
         // Encapsulation for "UndoText"
         public ArrayList UndoTextInput
         {
-            get { return undoText; } // return the value of "undoText"
-            set { undoText = value; } // set the value of "undoText"
+            get { return undoText; } // mengembalikan nilai dari "undoText"
+            set { undoText = value; } // atur nilai dari "undoText"
         }
 
         // Encapsulation for "RedoText"
         public ArrayList RedoTextInput
         {
-            get { return redoText; } // return the value of "redoText"
-            set { redoText = value; } // set the value of "redoText"
+            get { return redoText; } // mengembalikan nilai dari "redoText"
+            set { redoText = value; } // atur nilai dari "redoText"
         }
 
-        // Function to undo
+        // Fungsi untuk undo
         public void Undo(string currentText)
         {
-            if (UndoTextInput.Count > 0) // Check if there are any elements in the UndoTextInput
+            if (UndoTextInput.Count > 0) // cek jika stack tidak kosong
             {
                 push(RedoTextInput, currentText); // Add currentText to the RedoTextInput
-                CurrentText = UndoTextInput[UndoTextInput.Count - 1].ToString(); // Set CurrentText to the last element in the UndoTextInput
-                pop(UndoTextInput); // Remove the last element in the UndoTextInput
+                CurrentText = UndoTextInput[UndoTextInput.Count - 1].ToString(); // Atur "currentText" ke dengan elemen terakhir di "UndoTextInput
+                pop(UndoTextInput); // Has the last element in the "UndoTextInput"
             }
             else
             {
@@ -90,14 +90,14 @@ namespace tugas_kel_2
             }
         }
 
-        // Function to redo
+        // Fungsi untuk redo
         public void Redo(string currentText)
         {
-            if (RedoTextInput.Count > 0) // Check if there are any elements in the RedoTextInput
+            if (RedoTextInput.Count > 0) // cek jika stack tidak kosong
             {
-                push(UndoTextInput, currentText); // Add currentText to the UndoTextInput
-                CurrentText = RedoTextInput[RedoTextInput.Count - 1].ToString(); // Set CurrentText to the last element in the RedoTextInput
-                pop(RedoTextInput); // Remove the last element in the RedoTextInput
+                push(UndoTextInput, currentText); // Tambahkan teks lama ke "UndoTextInput"
+                CurrentText = RedoTextInput[RedoTextInput.Count - 1].ToString(); // Atur "currentText" ke dengan elemen terakhir di "RedoTextInput"
+                pop(RedoTextInput); // Hapus elemen terakhir di "RedoTextInput"
             }
             else
             {
@@ -106,16 +106,16 @@ namespace tugas_kel_2
             }
         }
 
-        // Display output text
+        // Fungsi untuk menampilkan teks
         public void DisplayCurrentText(string a)
         {
-            Console.WriteLine("{0} {1}", a, CurrentText); // Display the current text
+            Console.WriteLine("{0} {1}", a, CurrentText); // Mencetak / menampilkan elemen
         }
 
-        // Display the content of the stack (for debugging purpose)
+        // Fungsi untuk menampilkan isi dalam stack
         public void DisplayStack(ArrayList a, ArrayList b)
         {
-            int index = (a.Count == 0) ? b.Count : a.Count; // find the length of the ArrayList
+            int index = (a.Count == 0) ? b.Count : a.Count; // mencari jumlah elemen pada kedua ArrayList
             string isEmpty = " ";
             int NoA = index;
             int NoB = index;
@@ -123,11 +123,11 @@ namespace tugas_kel_2
             Console.WriteLine("+----+-------------------------+----+-------------------------+");
             Console.WriteLine("| No | Undo Text               | No | Redo Text               |");
             Console.WriteLine("+----+-------------------------+----+-------------------------+");
-            for (int i = index; i > 0; i--) // To print the elements in the stack
+            for (int i = index; i > 0; i--) //  Untuk menampilkan elemen dari index terakhir ke index pertama
             {
-                if (a.Count == 0) // check if the first ArrayList is empty
+                if (a.Count == 0) // cek jika ArrayList pertama tidak kosong
                 {
-                    // printing the elements
+                    // Mencetak / menampilkan elemen
                     Console.WriteLine(
                         "| {0,-2} | {1, -23} | {2,-2} | {3, -23} |",
                         isEmpty,
@@ -136,9 +136,9 @@ namespace tugas_kel_2
                         b[i - 1]
                     );
                 }
-                else if (b.Count == 0) // check if the second ArrayList is empty
+                else if (b.Count == 0) // cek jika ArrayList kedua tidak kosong
                 {
-                    // printing the elements
+                    // Mencetak / menampilkan elemen
                     Console.WriteLine(
                         "| {0,-2} | {1, -23} | {2,-2} | {3, -23} |",
                         NoA--,
@@ -147,9 +147,9 @@ namespace tugas_kel_2
                         isEmpty
                     );
                 }
-                else // if both ArrayList are not empty
+                else // cek jika kedua ArrayList tidak kosong
                 {
-                    // printing the elements
+                    // Mencetak / menampilkan elemen
                     Console.WriteLine(
                         "| {0,-2} | {1, -23} | {2,-2} | {3, -23} |",
                         NoA--,
@@ -162,6 +162,7 @@ namespace tugas_kel_2
             Console.WriteLine("+----+-------------------------+----+-------------------------+");
         }
 
+        // Fungsi untuk print last element
         public void DisplayLastElement(ArrayList a, ArrayList b)
         {
             System.Console.WriteLine();
@@ -172,11 +173,11 @@ namespace tugas_kel_2
             Footer();
         }
 
-        // Function to get input
+        // Fungsi untuk mengambil input dari user
         public string GetInput(string input)
         {
-            Console.Write(input); // For user to input
-            return Console.ReadLine(); // Get the input
+            Console.Write(input); // Untuk input dari user
+            return Console.ReadLine(); // Ambil input dari user
         }
 
         // Function to edit text
@@ -184,17 +185,23 @@ namespace tugas_kel_2
         {
             Console.Clear();
             Headers("EDIT TEXT");
-            string newText = GetInput("Masukkan teks baru: "); // Input new text
+            string newText = GetInput("Masukkan teks baru: "); // Masukkan teks baru
             if (!string.IsNullOrWhiteSpace(newText))
             {
-                push(UndoTextInput, CurrentText); // Add currentText to the UndoTextInput
-                clear(RedoTextInput); // Remove all elements in the RedoTextInput
+                push(UndoTextInput, CurrentText); // Tambahkan teks lama ke "UndoTextInput"
+                clear(RedoTextInput); // Hapus semua elemen pada "RedoTextInput"
 
-                CurrentText = newText; // Set CurrentText to the new text
+                CurrentText = newText; // Atur CurrentText ke teks baru
+            }
+            else
+            {
+                Console.WriteLine("Teks tidak boleh kosong. Silahkan ulangi kembali.!!!");
+                Footer();
+                // Edit();
             }
         }
 
-        // Function to display debugging information
+        // Fungsi untuk debugging
         public void Debugging()
         {
             Console.Clear();
@@ -206,7 +213,7 @@ namespace tugas_kel_2
             Console.ReadKey();
         }
 
-        // Header and Footer
+        // Header dan Footer
         public void Headers(string headerName)
         {
             Console.WriteLine("======={0}=======", headerName);
@@ -220,73 +227,72 @@ namespace tugas_kel_2
             Console.ReadKey();
         }
 
-        // End of the header and footer
+        // Akhir dari fungsi header dan footer
 
-        // Display the menu
+        // Fungsi untuk menampilkan menu
         public void DisplayMenu()
         {
             Console.Clear();
-            Headers("Undo/Redo Text Editor"); // Display the header
-            DisplayCurrentText("The current text is: "); // Display the current text
+            Headers("Undo/Redo Text Editor"); // Tampilkan header
+            DisplayCurrentText("The current text is: "); // Tampilkan teks saat ini "currentText"
 
-            if (UndoTextInput.Count > 0 || RedoTextInput.Count > 0) // Check if the stack is empty
+            if (UndoTextInput.Count > 0 || RedoTextInput.Count > 0) // Cek jika stack tidak kosong
             {
                 Console.WriteLine();
-                DisplayStack(UndoTextInput, RedoTextInput); // Display the content of the stack
+                DisplayStack(UndoTextInput, RedoTextInput); // Tampilkan stack, jika stack tidak kosong
             }
 
             Console.WriteLine();
-            Console.WriteLine("[1] Edit\n[2] Undo\n[3] Redo\n[4] Exit"); // Print the menu
+            Console.WriteLine("[1] Edit / Tambahkan teks baru\n[2] Undo\n[3] Redo\n[4] Exit"); // Tampilkan menu
         }
 
-        // Function to handle the choice
+        // Fungsi untuk menghandle "choice"
         public void HandleChoice(int choice)
         {
             switch (choice)
             {
                 case 1:
-                    Edit(); // run the "Edit" function
+                    Edit(); // Jalankan fungsi "Edit"
                     break;
                 case 2:
-                    Undo(CurrentText); // run the "Undo" function
+                    Undo(CurrentText); // Jalankan fungsi "Undo"
                     break;
                 case 3:
-                    Redo(CurrentText); // run the "Redo" function
+                    Redo(CurrentText); // Jalankan fungsi "Redo"
                     break;
                 case 4:
-                    Environment.Exit(0); // Exit the program
+                    Environment.Exit(0); // Keluar dari program
                     break;
                 case 5:
-                    // Debugging();
                     DisplayLastElement(UndoTextInput, RedoTextInput);
                     break;
             }
         }
 
-        // Function to run the program
+        // Fungsi untuk menjalankan program
         public void Run()
         {
-            Headers("Undo/Redo Text Editor"); // Display the header
-            CurrentText = GetInput("Masukkan teks: "); // User input
-            if (string.IsNullOrWhiteSpace(CurrentText)) // Check if the text is empty or just whitespace
+            Headers("Undo/Redo Text Editor"); // Mencetak / menampilkan header
+            CurrentText = GetInput("Masukkan teks: "); // Mengambil input dari user
+            if (string.IsNullOrWhiteSpace(CurrentText)) // cek jika teks input adalah whitespace / kosong
             {
-                Console.WriteLine("Teks tidak boleh kosong. Silahkan ulangi kembali.!!!"); // error message
+                Console.WriteLine("Teks tidak boleh kosong. Silahkan ulangi kembali.!!!"); // Pesan error
                 Footer();
                 Console.Clear();
-                Run(); // Recall "Run" program if the input is empty of just whitespace
+                Run(); // Menjalankan ulang program jika teks input adalah whitespace / kosong
             }
 
             while (true)
             {
-                DisplayMenu(); // Display the menu
-                string choiceInput = GetInput("Masukkan pilihan: "); // User Input
+                DisplayMenu(); // mencetak / menampilkan menu
+                string choiceInput = GetInput("Masukkan pilihan: "); // mengambil input dari user
 
-                if (!int.TryParse(choiceInput, out int choice)) // Check if the input is integer and convert it in "choice" variable
+                if (!int.TryParse(choiceInput, out int choice)) // cek jika input bukan integer dan konversi ke integer
                 {
-                    Console.WriteLine("Input harus berupa angka. Silahkan ulangi kembali.!!!"); // if the input is not integer
+                    Console.WriteLine("Input harus berupa angka. Silahkan ulangi kembali.!!!"); // Pesan error
                     Console.ReadKey();
                 }
-                HandleChoice(choice); // handle the choice
+                HandleChoice(choice); // menjalankan fungsi "HandleChoice" dengan pilihan yang telah diterima
             }
         }
     }
