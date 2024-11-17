@@ -85,7 +85,7 @@ namespace tugas_kel_2
             }
             else
             {
-                Console.WriteLine("Nothing to undo!");
+                Console.WriteLine("Nothing to undo!"); // pesan jika tidak ada elemen yang dapat di-undo
                 Console.ReadKey();
             }
         }
@@ -101,8 +101,8 @@ namespace tugas_kel_2
             }
             else
             {
-                Console.WriteLine("Nothing to redo!");
-                Console.ReadKey();
+                Console.WriteLine("Nothing to redo!"); // pesan jika tidak ada elemen yang dapat di-redo
+                Footer();
             }
         }
 
@@ -115,16 +115,19 @@ namespace tugas_kel_2
         // Fungsi untuk menampilkan isi dalam stack
         public void DisplayStack(ArrayList a, ArrayList b)
         {
-            int index = (a.Count == 0) ? b.Count : a.Count; // mencari jumlah elemen pada kedua ArrayList
+            int MaxIndex = Math.Max(a.Count, b.Count); // mencari nilai maksimum dari kedua ArrayList
             string isEmpty = " ";
-            int NoA = index;
-            int NoB = index;
+            int NoA = MaxIndex;
+            int NoB = MaxIndex;
 
             Console.WriteLine("+----+-------------------------+----+-------------------------+");
             Console.WriteLine("| No | Undo Text               | No | Redo Text               |");
             Console.WriteLine("+----+-------------------------+----+-------------------------+");
-            for (int i = index; i > 0; i--) //  Untuk menampilkan elemen dari index terakhir ke index pertama
+            for (int i = MaxIndex; i > 0; i--) //  Untuk menampilkan elemen dari index terakhir ke index pertama
             {
+                string UndoText = i <= a.Count ? (string)a[i - 1] : isEmpty;
+                string RedoText = i <= b.Count ? (string)b[i - 1] : isEmpty;
+
                 if (a.Count == 0) // cek jika ArrayList pertama tidak kosong
                 {
                     // Mencetak / menampilkan elemen
@@ -133,7 +136,7 @@ namespace tugas_kel_2
                         isEmpty,
                         isEmpty,
                         NoB--,
-                        b[i - 1]
+                        RedoText
                     );
                 }
                 else if (b.Count == 0) // cek jika ArrayList kedua tidak kosong
@@ -142,7 +145,7 @@ namespace tugas_kel_2
                     Console.WriteLine(
                         "| {0,-2} | {1, -23} | {2,-2} | {3, -23} |",
                         NoA--,
-                        a[i - 1],
+                        UndoText,
                         isEmpty,
                         isEmpty
                     );
@@ -153,9 +156,9 @@ namespace tugas_kel_2
                     Console.WriteLine(
                         "| {0,-2} | {1, -23} | {2,-2} | {3, -23} |",
                         NoA--,
-                        a[i - 1],
+                        UndoText,
                         NoB--,
-                        b[i - 1]
+                        RedoText
                     );
                 }
             }
@@ -290,7 +293,7 @@ namespace tugas_kel_2
                 if (!int.TryParse(choiceInput, out int choice)) // cek jika input bukan integer dan konversi ke integer
                 {
                     Console.WriteLine("Input harus berupa angka. Silahkan ulangi kembali.!!!"); // Pesan error
-                    Console.ReadKey();
+                    Footer();
                 }
                 HandleChoice(choice); // menjalankan fungsi "HandleChoice" dengan pilihan yang telah diterima
             }
