@@ -12,10 +12,6 @@ namespace AriefDarmawan_8020230033
             {
                 a.Add(input);
             }
-            else
-            {
-                Console.WriteLine("Memory/Antrian penuh, silahkan tunggu hingga data dihapus");
-            }
         }
 
         public static void Remove(ArrayList a)
@@ -381,7 +377,7 @@ namespace AriefDarmawan_8020230033
                     }
                 }
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine(" {0}. {1, -45} [{2}]", a.Count, Tail(a), " Tail ");
+                Console.WriteLine(" {0}. {1, -45} [{2}]", a.Count, Tail(a), " Bot ");
                 Console.ResetColor();
             }
             else
@@ -396,8 +392,9 @@ namespace AriefDarmawan_8020230033
         // Tampilan Menu
         void DisplayMenu()
         {
+            Console.WriteLine("Silahkan pilih menu:");
             Console.Write(
-                "[1] Pilih Film (Add)\n[2] Download Film (Remove)\n[3] Head\n[4] Tail\n[5] Exit\n"
+                " [1] Pilih Film (Add)\n [2] Download Film (Remove)\n [3] Head\n [4] Tail\n [5] Exit\n"
             );
         }
 
