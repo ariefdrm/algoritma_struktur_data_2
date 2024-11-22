@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace AriefDarmawan_8020230033
 {
@@ -16,27 +12,27 @@ namespace AriefDarmawan_8020230033
             {
                 a.Add(input);
             }
-            else
-            {
-                Console.WriteLine("Memory/Antrian penuh, silahkan tunggu hingga data dihapus");
-            }
         }
 
         public static void Remove(ArrayList a)
         {
-            if (a.Count > 0)
-            {
-                a.RemoveAt(0);
-            }
-            else
-            {
-                Console.WriteLine("Memory/Antrian masih kosong");
-            }
+            a.RemoveAt(0);
+        }
+
+        public string Head(ArrayList a)
+        {
+            return a[0].ToString(); // Mengembalikan nilai pertama
+        }
+
+        public static string Tail(ArrayList a)
+        {
+            return a[a.Count - 1].ToString(); // Mengembalikan nilai terakhir
         }
     }
 
     class Film : Queue
     {
+        // Menginisiasikan variable yang digunakan
         string[] FamousFilmName =
         {
             "The Shawshank Redemption",
@@ -63,12 +59,7 @@ namespace AriefDarmawan_8020230033
 
         ArrayList FilmName = new ArrayList();
 
-        void Header(string HeaderName)
-        {
-            Console.WriteLine("======={0}=======", HeaderName);
-            Console.WriteLine();
-        }
-
+        // Untuk menampilkan header utama
         void MainHeader()
         {
             string[] header =
@@ -88,18 +79,21 @@ namespace AriefDarmawan_8020230033
             }
         }
 
+        // Untuk menampilkan footer
         void Footer()
         {
             Console.Write("Tekan Enter untuk melanjutkan...");
             Console.ReadKey();
         }
 
+        // Untuk mengambil input dari user
         public string GetInput(string input)
         {
             Console.Write(input);
             return Console.ReadLine();
         }
 
+        // Menampilkan daftar film dalam format tabel
         void DisplayListFilmName(string[] value)
         {
             int totalMovies = value.Length;
@@ -141,116 +135,10 @@ namespace AriefDarmawan_8020230033
             );
         }
 
-        void DisplayFilmDownload(ArrayList a, int no = 1)
+        // Mengambil inputan user untuk memilih film
+        void GetInputFilm(int resultLimit, ArrayList a, string[] b)
         {
-            foreach (string item in a)
-            {
-                Console.WriteLine(" {0}. {1, -45} [{2}]", no, item, "Ready");
-                no++;
-            }
-            Console.WriteLine();
-        }
-
-        void CountDown(ArrayList a, int no = 1)
-        {
-            int CountDown = 3;
-            while (CountDown >= 0)
-            {
-                Console.Clear();
-                MainHeader();
-                Console.WriteLine(" {0}. {1, -45} [  {2, 1}  ]", no, a[0], CountDown);
-                CountDown--;
-                Thread.Sleep(1000);
-            }
-            Console.WriteLine();
-        }
-
-        void DownloadProgress(ArrayList a, string selectedFilm)
-        {
-            int no = 1;
-            int totalSize = 100; // Simulasikan ukuran file total
-            int currentSize = 0;
-            int progress = 0;
-
-            CountDown(a);
-            Console.Clear();
-            MainHeader();
-            while (currentSize < totalSize)
-            {
-                // Simulasikan proses download
-                Thread.Sleep(100);
-                currentSize++;
-
-                // Hitung progres dalam persen
-                progress = (int)((double)currentSize / totalSize * 100);
-
-                // Hapus baris sebelumnya
-                Console.Write("\r");
-
-                // Tampilkan nama film yang sedang di download
-                Console.Write(" {0}. {1, -45} ", no, selectedFilm);
-
-                // Tampilkan bar progres
-                Console.Write("[");
-                for (int i = 0; i < 20; i++)
-                {
-                    if (i < progress / 5)
-                    {
-                        Console.Write("#");
-                    }
-                    else
-                    {
-                        Console.Write(" ");
-                    }
-                }
-                Console.Write("] {0}% ", progress);
-            }
-            Console.Clear();
-            MainHeader();
-            Console.WriteLine(
-                " {0}. {1, -45} {2} {3}%",
-                no,
-                selectedFilm,
-                "[       Success      ]",
-                progress
-            );
-
-            // Console.WriteLine("Download selesai!");
-        }
-
-        void AddFilm(ArrayList a, string[] b)
-        {
-            Console.Clear();
-            MainHeader();
-            Console.WriteLine();
-
-            DisplayListFilmName(FamousFilmName);
-
-            // Tampilkan film yang sudah di diinput jika ada
-            if (FilmName.Count > 0)
-            {
-                Console.WriteLine();
-                Console.WriteLine("Film yang sudah di tambahkan :");
-                DisplayFilmDownload(a);
-            }
-
-            // Tentukan batas masksimal yang dapat diinput
-            int MaxLimit = 5 - a.Count;
-            if (MaxLimit <= 0)
-            {
-                Console.WriteLine("Antrian penuh, silahkan download film yang sudah di tambahkan");
-                return;
-            }
-
-            // Prompt untuk jumlah film yangg ingin diinput
-            string Limit = GetInput(
-                $"Berapa banyak film yang ingin anda download (maksimal {MaxLimit}) kosong = default => {MaxLimit} : "
-            );
-            Limit = string.IsNullOrEmpty(Limit) ? MaxLimit.ToString() : Limit; // cek jika kosong, maka default = MaxLimit
-            int.TryParse(Limit, out int ResultLimit);
-            Console.WriteLine();
-
-            for (int i = 0; i < ResultLimit; i++)
+            for (int i = 0; i < resultLimit; i++)
             {
                 string movieName = GetInput(
                     $"No.{i + 1} Pilih No Film yang ingin anda download : "
@@ -289,58 +177,285 @@ namespace AriefDarmawan_8020230033
                     break;
                 }
             }
+        }
 
+        void GetNameFilmAdded(ArrayList a)
+        {
+            if (FilmName.Count > 0)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Film yang sudah di tambahkan :");
+                DisplayFilmDownload(a); // Tampilkan film yang sudah diinput
+            }
+        }
+
+        int GetLimit(string Limit, int MaxLimit)
+        {
+            Limit = string.IsNullOrEmpty(Limit) ? MaxLimit.ToString() : Limit; // cek jika kosong, maka default = MaxLimit
+
+            int.TryParse(Limit, out int ResultLimit); // Cek jika inputan bukan angka, lalu konversi menjadi integer
+            return ResultLimit;
+        }
+
+        // Tambah/Add film
+        void AddFilm(ArrayList a, string[] b)
+        {
+            Console.Clear();
+            MainHeader();
+            Console.WriteLine();
+
+            if (a.Count < 5)
+            {
+                // Menampilkan daftar film
+                DisplayListFilmName(FamousFilmName);
+
+                // Tampilkan film yang sudah di diinput jika ada
+                GetNameFilmAdded(a);
+
+                // Tentukan batas masksimal yang dapat diinput
+                int MaxLimit = 5 - a.Count;
+                if (MaxLimit <= 0)
+                {
+                    Console.WriteLine(
+                        "Antrian penuh, silahkan download film yang sudah di tambahkan"
+                    );
+                    return;
+                }
+
+                // Prompt untuk jumlah film yangg ingin diinput
+                string Limit = GetInput(
+                    $"Berapa banyak film yang ingin anda download (maksimal {MaxLimit}) kosong/default = {MaxLimit} : "
+                );
+
+                // Memanggil method untuk memilih film
+                GetInputFilm(GetLimit(Limit, MaxLimit), a, b);
+            }
+            else
+            {
+                Console.WriteLine("Antrian penuh, silahkan download film yang sudah di tambahkan");
+            }
+
+            // Ini adalah footer
             Footer();
         }
 
+        // Menampilkan daftar film yang siap diunduh
+        void DisplayFilmDownload(ArrayList a, int no = 1, string status = "Ready")
+        {
+            foreach (string item in a)
+            {
+                Console.WriteLine(" {0}. {1, -45} [{2}]", no, item, status);
+                no++;
+            }
+            Console.WriteLine();
+        }
+
+        // Hitung mundur
+        void CountDown(ArrayList a, int no = 1)
+        {
+            int CountDown = 3;
+            for (int i = 0; i < 3; i++)
+            {
+                Console.Clear();
+                MainHeader();
+                Console.WriteLine(" {0}. {1, -45} [  {2, 1}  ]", no, a[0], CountDown);
+                CountDown--;
+                Thread.Sleep(1000);
+            }
+            Console.WriteLine();
+        }
+
+        // Memvisualisasikan download progress
+        void DownloadProgress(ArrayList a, string selectedFilm)
+        {
+            int no = 1;
+            int totalSize = 100; // Simulasikan ukuran file total
+            int currentSize = 0;
+            int progress = 0;
+
+            // Menampilkan hitung mundur
+            CountDown(a);
+            Console.Clear();
+            MainHeader();
+
+            while (currentSize < totalSize)
+            {
+                // Simulasikan proses download
+                Thread.Sleep(100);
+                currentSize++;
+
+                // Hitung progres dalam persen
+                progress = (int)((double)currentSize / totalSize * 100);
+
+                // Hapus baris sebelumnya
+                Console.Write("\r");
+
+                // Tampilkan nama film yang sedang di download
+                Console.Write(" {0}. {1, -45} ", no, selectedFilm);
+
+                // Tampilkan bar progres
+                Console.Write("[");
+                for (int i = 0; i < 20; i++)
+                {
+                    if (i < progress / 5)
+                    {
+                        Console.Write("#");
+                    }
+                    else
+                    {
+                        Console.Write(" ");
+                    }
+                }
+                Console.Write("] {0}% ", progress);
+            }
+
+            Console.Clear();
+            MainHeader(); // Menampilkan header
+
+            Console.WriteLine(
+                " {0}. {1, -45} {2} {3}%",
+                no,
+                selectedFilm,
+                "[       Success      ]",
+                progress
+            );
+        }
+
+        // Hapus film dari list
         void DownloadFilm(ArrayList a)
         {
             if (FilmName.Count > 0)
             {
-                string FirstFilm = a[0].ToString();
+                string FirstFilm = a[0].ToString(); // Mengambil film pertama
 
                 Console.Clear();
                 Console.WriteLine();
 
-                DownloadProgress(a, FirstFilm);
-                Remove(a);
+                DownloadProgress(a, FirstFilm); // Memanggil method download progress
+                Remove(a); // Menghapus film pertama dari antrian / list
+            }
+            else
+            {
+                // Pesan error jika antrian masih kosong
+                Console.WriteLine("Antrian masih kosong, silahkan tambahkan film terlebih dahulu");
+            }
+
+            DisplayFilmDownload(FilmName, 1 + 1); // Menampilkan film selanjutnya mulai dari angka 2
+
+            Footer();
+        }
+
+        void DisplayAll()
+        {
+            Console.Clear();
+            MainHeader();
+
+            Console.WriteLine("Daftar Film :");
+            DisplayListFilmName(FamousFilmName);
+
+            Console.WriteLine("\nAntrian Film :");
+            if (FilmName.Count > 0)
+            {
+                DisplayFilmDownload(FilmName, 1);
+            }
+            else
+            {
+                Console.WriteLine(
+                    " 1. Antrian Film masih kosong, Silahkan tambahkan film terlebih dahulu."
+                );
+            }
+
+            Console.WriteLine();
+            Footer();
+        }
+
+        void DisplayHead(ArrayList a)
+        {
+            int no = 1;
+            Console.Clear();
+            MainHeader();
+
+            if (a.Count > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine(" {0}. {1, -45} [{2}]", no, Head(a), " Head ");
+                Console.ResetColor();
+
+                if (a.Count > 1)
+                {
+                    for (int i = 1; i < a.Count; i++)
+                    {
+                        Console.WriteLine(" {0}. {1, -45} [{2}]", ++no, a[i], "Ready");
+                    }
+                }
             }
             else
             {
                 Console.WriteLine("Antrian masih kosong, silahkan tambahkan film terlebih dahulu");
             }
 
-            DisplayFilmDownload(FilmName, 1 + 1);
-
+            Console.WriteLine();
             Footer();
         }
 
-        void DisplayMenu()
+        void DisplayTail(ArrayList a)
         {
-            Console.Write("[1] Pilih Film (Add)\n[2] Download Film (Remove)\n[3] Keluar\n");
+            int no = 1;
+            Console.Clear();
+            MainHeader();
+
+            if (a.Count > 0)
+            {
+                if (a.Count > 1)
+                {
+                    for (int i = 0; i < a.Count - 1; i++)
+                    {
+                        Console.WriteLine(" {0}. {1, -45} [{2}]", no++, a[i], "Ready");
+                    }
+                }
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine(" {0}. {1, -45} [{2}]", a.Count, Tail(a), " Tail ");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.WriteLine("Antrian masih kosong, silahkan tambahkan film terlebih dahulu");
+            }
+
+            Console.WriteLine();
+            Footer();
         }
 
+        // Tampilan Menu
+        void DisplayMenu()
+        {
+            Console.WriteLine("Silahkan pilih menu:");
+            Console.Write(
+                " [1] Pilih Film (Add)\n [2] Download Film (Remove)\n [3] Tampilkan Semua Film\n [4] Head\n [5] Tail\n [6] Exit\n"
+            );
+        }
+
+        // Handle pilihan
         void HandleChoice(int Choice)
         {
             switch (Choice)
             {
                 case 1:
-                    if (FilmName.Count < 5)
-                    {
-                        AddFilm(FilmName, FamousFilmName);
-                    }
-                    else
-                    {
-                        Console.WriteLine(
-                            "Antrian penuh, silahkan download film yang sudah di tambahkan"
-                        );
-                        Footer();
-                    }
+                    AddFilm(FilmName, FamousFilmName);
                     break;
                 case 2:
                     DownloadFilm(FilmName);
                     break;
                 case 3:
+                    DisplayAll();
+                    break;
+                case 4:
+                    DisplayHead(FilmName);
+                    break;
+                case 5:
+                    DisplayTail(FilmName);
+                    break;
+                case 6:
                     Environment.Exit(0);
                     break;
             }
@@ -365,6 +480,10 @@ namespace AriefDarmawan_8020230033
                 {
                     Console.WriteLine("Inputan harus angka!");
                     Footer();
+                }
+                else if (choice < 1 || choice > 6)
+                {
+                    Console.WriteLine("Inputan harus antara 1-6!");
                 }
 
                 HandleChoice(choice);
