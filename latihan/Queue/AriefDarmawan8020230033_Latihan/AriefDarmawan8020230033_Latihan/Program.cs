@@ -31,12 +31,14 @@ namespace AriefDarmawan8020230033_Latihan
             obat.Add(Obat);
         }
         
-        static void PanggilAntrian(ArrayList nama)
+        static void PanggilAntrian(ArrayList nama, ArrayList obat)
         {
             if (nama.Count > 0)
             {
                 Console.WriteLine();
                 Console.WriteLine("Nama : {0}", nama[0]);
+                nama.RemoveAt(0);
+                obat.RemoveAt(0);
             }
             else
             {
@@ -47,12 +49,19 @@ namespace AriefDarmawan8020230033_Latihan
         static void DaftarAntrian(ArrayList nama, ArrayList obat)
         {
             int no = 1;
-            for (int i = 0; i < nama.Count; i++)
+            if (nama.Count > 0)
             {
-                Console.WriteLine("Antrian {0}", no++);
-                Console.WriteLine("Nama : {0}", nama[i]);
-                Console.WriteLine("Obat : {0}", obat[i]);  
-                Console.WriteLine();
+                for (int i = 0; i < nama.Count; i++)
+                {
+                    Console.WriteLine("Antrian {0}", no++);
+                    Console.WriteLine("Nama : {0}", nama[i]);
+                    Console.WriteLine("Obat : {0}", obat[i]);
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Antrian Kosong");
             }
         }
 
@@ -81,7 +90,7 @@ namespace AriefDarmawan8020230033_Latihan
             while (true)
             {
                 Header();
-                Console.WriteLine("1. Tambah Antrian\n2. Panggil Antrian\n3. Daftar Antrian\n4. Kosongkan antrian\n5. Exit\n ");
+                Console.WriteLine("1. Tambah Antrian.\n2. Panggil Antrian.\n3. Daftar Antrian.\n4. Kosongkan antrian.\n5. Exit.\n ");
                 Console.Write("Masukkan pilihan : ");
                 int pilihan = int.Parse(Console.ReadLine());
 
@@ -91,7 +100,7 @@ namespace AriefDarmawan8020230033_Latihan
                           TambahAntrian(nama, obat);
                         break;
                     case 2:
-                        PanggilAntrian(nama);
+                        PanggilAntrian(nama, obat);
                         break;
                     case 3:
                         DaftarAntrian(nama, obat);
