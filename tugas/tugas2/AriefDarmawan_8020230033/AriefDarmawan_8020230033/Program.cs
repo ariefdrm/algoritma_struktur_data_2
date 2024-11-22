@@ -204,27 +204,36 @@ namespace AriefDarmawan_8020230033
             MainHeader();
             Console.WriteLine();
 
-            // Menampilkan daftar film
-            DisplayListFilmName(FamousFilmName);
+            if (a.Count < 5)
+            {
+                // Menampilkan daftar film
+                DisplayListFilmName(FamousFilmName);
 
-            // Tampilkan film yang sudah di diinput jika ada
-            GetNameFilmAdded(a);
+                // Tampilkan film yang sudah di diinput jika ada
+                GetNameFilmAdded(a);
 
-            // Tentukan batas masksimal yang dapat diinput
-            int MaxLimit = 5 - a.Count;
-            if (MaxLimit <= 0)
+                // Tentukan batas masksimal yang dapat diinput
+                int MaxLimit = 5 - a.Count;
+                if (MaxLimit <= 0)
+                {
+                    Console.WriteLine(
+                        "Antrian penuh, silahkan download film yang sudah di tambahkan"
+                    );
+                    return;
+                }
+
+                // Prompt untuk jumlah film yangg ingin diinput
+                string Limit = GetInput(
+                    $"Berapa banyak film yang ingin anda download (maksimal {MaxLimit}) kosong/default = {MaxLimit} : "
+                );
+
+                // Memanggil method untuk memilih film
+                GetInputFilm(GetLimit(Limit, MaxLimit), a, b);
+            }
+            else
             {
                 Console.WriteLine("Antrian penuh, silahkan download film yang sudah di tambahkan");
-                return;
             }
-
-            // Prompt untuk jumlah film yangg ingin diinput
-            string Limit = GetInput(
-                $"Berapa banyak film yang ingin anda download (maksimal {MaxLimit}) kosong/default = {MaxLimit} : "
-            );
-
-            // Memanggil method untuk memilih film
-            GetInputFilm(GetLimit(Limit, MaxLimit), a, b);
 
             // Ini adalah footer
             Footer();
@@ -264,9 +273,11 @@ namespace AriefDarmawan_8020230033
             int currentSize = 0;
             int progress = 0;
 
+            // Menampilkan hitung mundur
             CountDown(a);
             Console.Clear();
             MainHeader();
+
             while (currentSize < totalSize)
             {
                 // Simulasikan proses download
@@ -297,8 +308,10 @@ namespace AriefDarmawan_8020230033
                 }
                 Console.Write("] {0}% ", progress);
             }
+
             Console.Clear();
-            MainHeader();
+            MainHeader(); // Menampilkan header
+
             Console.WriteLine(
                 " {0}. {1, -45} {2} {3}%",
                 no,
@@ -332,6 +345,30 @@ namespace AriefDarmawan_8020230033
             Footer();
         }
 
+        void DisplayAll()
+        {
+            Console.Clear();
+            MainHeader();
+
+            Console.WriteLine("Daftar Film :");
+            DisplayListFilmName(FamousFilmName);
+
+            Console.WriteLine("\nAntrian Film :");
+            if (FilmName.Count > 0)
+            {
+                DisplayFilmDownload(FilmName, 1);
+            }
+            else
+            {
+                Console.WriteLine(
+                    " 1. Antrian Film masih kosong, Silahkan tambahkan film terlebih dahulu."
+                );
+            }
+
+            Console.WriteLine();
+            Footer();
+        }
+
         void DisplayHead(ArrayList a)
         {
             int no = 1;
@@ -341,7 +378,7 @@ namespace AriefDarmawan_8020230033
             if (a.Count > 0)
             {
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine(" {0}. {1, -45} [{2}]", no, Head(a), " Top ");
+                Console.WriteLine(" {0}. {1, -45} [{2}]", no, Head(a), " Head ");
                 Console.ResetColor();
 
                 if (a.Count > 1)
@@ -377,7 +414,7 @@ namespace AriefDarmawan_8020230033
                     }
                 }
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine(" {0}. {1, -45} [{2}]", a.Count, Tail(a), " Bot ");
+                Console.WriteLine(" {0}. {1, -45} [{2}]", a.Count, Tail(a), " Tail ");
                 Console.ResetColor();
             }
             else
@@ -394,7 +431,7 @@ namespace AriefDarmawan_8020230033
         {
             Console.WriteLine("Silahkan pilih menu:");
             Console.Write(
-                " [1] Pilih Film (Add)\n [2] Download Film (Remove)\n [3] Head\n [4] Tail\n [5] Exit\n"
+                " [1] Pilih Film (Add)\n [2] Download Film (Remove)\n [3] Tampilkan Semua Film\n [4] Head\n [5] Tail\n [6] Exit\n"
             );
         }
 
@@ -404,28 +441,21 @@ namespace AriefDarmawan_8020230033
             switch (Choice)
             {
                 case 1:
-                    if (FilmName.Count < 5)
-                    {
-                        AddFilm(FilmName, FamousFilmName);
-                    }
-                    else
-                    {
-                        Console.WriteLine(
-                            "Antrian penuh, silahkan download film yang sudah di tambahkan"
-                        );
-                        Footer();
-                    }
+                    AddFilm(FilmName, FamousFilmName);
                     break;
                 case 2:
                     DownloadFilm(FilmName);
                     break;
                 case 3:
-                    DisplayHead(FilmName);
+                    DisplayAll();
                     break;
                 case 4:
-                    DisplayTail(FilmName);
+                    DisplayHead(FilmName);
                     break;
                 case 5:
+                    DisplayTail(FilmName);
+                    break;
+                case 6:
                     Environment.Exit(0);
                     break;
             }
@@ -450,6 +480,10 @@ namespace AriefDarmawan_8020230033
                 {
                     Console.WriteLine("Inputan harus angka!");
                     Footer();
+                }
+                else if (choice < 1 || choice > 6)
+                {
+                    Console.WriteLine("Inputan harus antara 1-6!");
                 }
 
                 HandleChoice(choice);
