@@ -356,7 +356,7 @@ namespace AriefDarmawan_8020230033
             Console.WriteLine("\nAntrian Film :");
             if (FilmName.Count > 0)
             {
-                DisplayFilmDownload(FilmName, 1);
+                DisplayFilmDownload(FilmName);
             }
             else
             {
@@ -484,6 +484,7 @@ namespace AriefDarmawan_8020230033
                 else if (choice < 1 || choice > 6)
                 {
                     Console.WriteLine("Inputan harus antara 1-6!");
+                    Footer();
                 }
 
                 HandleChoice(choice);
